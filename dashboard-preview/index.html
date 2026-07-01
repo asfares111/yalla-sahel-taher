@@ -1,0 +1,537 @@
+﻿<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Yalla Sahel | Dashboard Preview</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/yallasahel-logo.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #101b31;
+      --muted: #687c99;
+      --blue: #3f6dea;
+      --blue-soft: #edf3ff;
+      --line: #e1e9f5;
+      --page: #f5f8fd;
+      --card: #ffffff;
+      --shadow: 0 18px 52px rgba(41, 73, 122, 0.12);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      min-width: 320px;
+      margin: 0;
+      background: var(--page);
+      color: var(--ink);
+      font-family: 'Manrope', sans-serif;
+    }
+
+    body[dir="rtl"] { font-family: 'Maraey', 'Cairo', sans-serif; }
+
+    a { color: inherit; text-decoration: none; }
+
+    button { font: inherit; }
+
+    .preview-page {
+      min-height: 100vh;
+      padding: 14px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      max-width: 1440px;
+      margin: 0 auto 14px;
+      padding: 12px 16px;
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.86);
+      box-shadow: 0 10px 28px rgba(41, 73, 122, 0.07);
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .brand img { display: block; width: 84px; height: auto; }
+
+    .top-actions { display: flex; align-items: center; gap: 10px; }
+
+    .back-link,
+    .lang-toggle button {
+      min-height: 38px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #ffffff;
+      color: var(--ink);
+      font-size: 0.82rem;
+      font-weight: 600;
+    }
+
+    .back-link { display: inline-flex; align-items: center; padding: 9px 13px; }
+
+    .lang-toggle {
+      display: inline-flex;
+      gap: 3px;
+      padding: 3px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #ffffff;
+    }
+
+    .lang-toggle button { min-height: 30px; padding: 5px 9px; border: 0; cursor: pointer; }
+    .lang-toggle button.is-active { background: var(--blue); color: #ffffff; }
+
+    .app-frame {
+      display: grid;
+      grid-template-columns: 206px minmax(0, 1fr);
+      max-width: 1440px;
+      min-height: calc(100vh - 118px);
+      margin: 0 auto;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: var(--card);
+      box-shadow: var(--shadow);
+    }
+
+    .side-nav {
+      padding: 18px 12px;
+      border-inline-end: 1px solid var(--line);
+      background: #fbfcff;
+    }
+
+    .venue {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px;
+      margin-bottom: 20px;
+      border-radius: 14px;
+      background: var(--blue-soft);
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .venue-mark {
+      width: 30px;
+      height: 30px;
+      display: grid;
+      place-items: center;
+      border-radius: 10px;
+      background: var(--blue);
+      color: #ffffff;
+    }
+
+    .venue-mark svg { width: 17px; height: 17px; }
+
+    .nav-label {
+      margin: 0 0 9px 12px;
+      color: var(--muted);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .nav-list { display: grid; gap: 5px; margin: 0; padding: 0; list-style: none; }
+
+    .nav-list li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 12px;
+      border-radius: 12px;
+      color: #566987;
+      font-size: 0.88rem;
+      font-weight: 600;
+    }
+
+    .nav-list li.is-active { background: #e9f0ff; color: #244a9e; }
+    .nav-list svg { width: 18px; height: 18px; stroke-width: 2; }
+
+    .dashboard-main { padding: 24px; }
+
+    .intro {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 22px;
+    }
+
+    .eyebrow {
+      margin: 0 0 7px;
+      color: var(--blue);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1 { margin: 0; font-size: clamp(1.65rem, 4vw, 2.4rem); line-height: 1.16; }
+    .intro p:last-child { max-width: 680px; margin: 9px 0 0; color: var(--muted); font-size: 0.96rem; line-height: 1.6; }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      flex: 0 0 auto;
+      padding: 9px 12px;
+      border: 1px solid #c7eed8;
+      border-radius: 999px;
+      background: #effcf4;
+      color: #148147;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+
+    .status::before { width: 8px; height: 8px; border-radius: 50%; background: #20b867; content: ''; }
+
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .metric {
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: #ffffff;
+    }
+
+    .metric strong { display: block; font-size: 1.32rem; }
+    .metric strong.metric-copy { color: var(--primary); font-size: 0.91rem; line-height: 1.4; }
+    .metric span { display: block; margin-top: 5px; color: var(--muted); font-size: 0.8rem; font-weight: 600; }
+
+    .screen-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .screen-card {
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: #ffffff;
+      cursor: pointer;
+      text-align: start;
+      transition: transform 180ms ease, box-shadow 180ms ease;
+    }
+
+    .screen-card:hover { transform: translateY(-2px); box-shadow: 0 14px 28px rgba(41, 73, 122, 0.11); }
+    .screen-card img { display: block; width: 100%; aspect-ratio: 16 / 9; border-radius: 12px; object-fit: cover; object-position: top center; transition: transform 180ms ease; }
+    .screen-card:hover img { transform: scale(1.012); }
+    .screen-card strong { display: block; margin: 12px 2px 3px; font-size: 0.95rem; }
+    .screen-card span { display: block; margin: 0 2px; color: var(--muted); font-size: 0.8rem; }
+
+    .image-modal {
+      position: fixed;
+      z-index: 10;
+      inset: 0;
+      display: none;
+      place-items: center;
+      padding: 20px;
+      background: rgba(9, 24, 48, 0.78);
+    }
+
+    .image-modal.is-open { display: grid; }
+    .image-modal figure { position: relative; width: min(100%, 1400px); margin: 0; }
+    .image-modal img { display: block; width: 100%; max-height: 82vh; border-radius: 16px; object-fit: contain; background: #ffffff; }
+    .modal-close { position: absolute; top: 12px; right: 12px; width: 38px; height: 38px; border: 0; border-radius: 50%; background: #ffffff; color: var(--ink); cursor: pointer; font-size: 1.35rem; }
+    body[dir="rtl"] .modal-close { right: auto; left: 12px; }
+    body.modal-open { overflow: hidden; }
+
+    body[dir="rtl"] .side-nav { border-inline-end: 0; border-inline-start: 1px solid var(--line); }
+    body[dir="rtl"] .venue, body[dir="rtl"] .nav-list li { flex-direction: row-reverse; }
+    body[dir="rtl"] .screen-card { text-align: right; }
+    body[dir="rtl"] .nav-label, body[dir="rtl"] .eyebrow { letter-spacing: 0; }
+
+    @media (max-width: 760px) {
+      .preview-page { padding: 0; }
+      .topbar { margin: 0; border-radius: 0; }
+      .brand img { width: 72px; }
+      .back-link { display: none; }
+      .app-frame { display: block; min-height: calc(100vh - 70px); border-radius: 0; border-inline: 0; }
+      .side-nav { display: none; }
+      .dashboard-main { padding: 20px 16px; }
+      .intro { display: block; }
+      .status { margin-top: 14px; }
+      .metric-grid { gap: 8px; }
+      .metric { padding: 12px; }
+      .metric strong { font-size: 1.08rem; }
+      .metric strong.metric-copy { font-size: 0.76rem; }
+      .metric span { font-size: 0.72rem; }
+      .screen-grid { grid-template-columns: 1fr; gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="preview-page">
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="Yalla Sahel home"><img src="../assets/yallasahel-logo.svg" alt="Yalla Sahel"></a>
+      <div class="top-actions">
+        <a class="back-link" href="/" data-i18n="back">Back to website</a>
+        <div class="lang-toggle" aria-label="Language toggle">
+          <button class="is-active" type="button" data-lang="en" aria-pressed="true">English</button>
+          <button type="button" data-lang="ar" aria-pressed="false">ط§ظ„ط¹ط±ط¨ظٹط©</button>
+        </div>
+      </div>
+    </header>
+
+    <div class="app-frame">
+      <aside class="side-nav">
+        <div class="venue">
+          <span class="venue-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 21V7l9-4 9 4v14"/><path d="M8 21v-6h8v6"/></svg></span>
+          <span>Marrasi Beach</span>
+        </div>
+        <p class="nav-label" data-i18n="navigation">Navigation</p>
+        <ul class="nav-list">
+          <li class="is-active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg><span data-i18n="overview">Overview</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 6-7"/></svg><span data-i18n="operations">Operations</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 19V5"/><path d="M4 19h16"/><path d="M8 16v-5"/><path d="M12 16V8"/><path d="M16 16v-3"/></svg><span data-i18n="analytics">Analytics</span></li>
+        </ul>
+      </aside>
+
+      <main class="dashboard-main">
+        <section class="intro">
+          <div>
+            <p class="eyebrow" data-i18n="eyebrow">Yalla Sahel Platform</p>
+            <h1 data-i18n="title">Explore the beach operations dashboard.</h1>
+            <p data-i18n="description">A visual walkthrough of the core tools your team uses to sell, manage availability, handle tickets and check guests in.</p>
+          </div>
+          <span class="status" data-i18n="status">Live Preview</span>
+        </section>
+
+        <section class="metric-grid" aria-label="Platform summary">
+          <article class="metric"><strong>15+</strong><span data-i18n="metricOne">Beach Management Modules</span></article>
+          <article class="metric"><strong class="metric-copy" data-i18n="metricTwo">POS â€¢ Tickets â€¢ Memberships â€¢ QR</strong></article>
+          <article class="metric"><strong class="metric-copy" data-i18n="metricThree">Real-Time Operations &amp; Reporting</strong></article>
+        </section>
+
+        <section class="screen-grid" aria-label="Dashboard screenshots">
+          <button class="screen-card" type="button" data-image="../assets/dashboard-preview/screenshots/IMG_5248.webp" data-alt="Yalla Sahel POS and checkout screen">
+            <img src="../assets/dashboard-preview/screenshots/IMG_5248.webp" alt="Yalla Sahel POS and checkout screen" width="1290" height="726" loading="lazy" decoding="async">
+            <strong data-i18n="pos">POS &amp; Checkout</strong>
+            <span data-i18n="posCopy">Tickets, payments and checkout in one workspace.</span>
+          </button>
+          <button class="screen-card" type="button" data-image="../assets/dashboard-preview/screenshots/IMG_5245.webp" data-alt="Yalla Sahel ticket management screen">
+            <img src="../assets/dashboard-preview/screenshots/IMG_5245.webp" alt="Yalla Sahel ticket management screen" width="1290" height="726" loading="lazy" decoding="async">
+            <strong data-i18n="tickets">Ticket Management</strong>
+            <span data-i18n="ticketsCopy">Configure ticket categories, pricing and availability.</span>
+          </button>
+          <button class="screen-card" type="button" data-image="../assets/dashboard-preview/screenshots/IMG_5246.webp" data-alt="Yalla Sahel availability calendar">
+            <img src="../assets/dashboard-preview/screenshots/IMG_5246.webp" alt="Yalla Sahel availability calendar" width="1290" height="726" loading="lazy" decoding="async">
+            <strong data-i18n="availability">Availability Calendar</strong>
+            <span data-i18n="availabilityCopy">Open, close or set buyouts by date.</span>
+          </button>
+          <button class="screen-card" type="button" data-image="../assets/dashboard-preview/screenshots/IMG_5259.webp" data-alt="Yalla Sahel QR check-in screen">
+            <img src="../assets/dashboard-preview/screenshots/IMG_5259.webp" alt="Yalla Sahel QR check-in screen" width="1290" height="726" loading="lazy" decoding="async">
+            <strong data-i18n="qr">QR Check-In</strong>
+            <span data-i18n="qrCopy">Fast ticket and membership scanning at the gate.</span>
+          </button>
+          <button class="screen-card" type="button" data-image="../assets/dashboard-preview/screenshots/IMG_5266.webp" data-alt="Yalla Sahel menu management screen">
+            <img src="../assets/dashboard-preview/screenshots/IMG_5266.webp" alt="Yalla Sahel menu management screen" width="1290" height="726" loading="lazy" decoding="async">
+            <strong data-i18n="menu">Menu Management</strong>
+            <span data-i18n="menuCopy">Keep guest menus organized and ready to publish.</span>
+          </button>
+          <button class="screen-card" type="button" data-image="../assets/dashboard-preview/screenshots/IMG_5249.webp" data-alt="Yalla Sahel sales reports screen">
+            <img src="../assets/dashboard-preview/screenshots/IMG_5249.webp" alt="Yalla Sahel sales reports screen" width="1290" height="726" loading="lazy" decoding="async">
+            <strong data-i18n="sales">Sales Reports</strong>
+            <span data-i18n="salesCopy">Track daily revenue and transactions in one view.</span>
+          </button>
+          <button class="screen-card" type="button" data-image="../assets/dashboard-preview/screenshots/IMG_5260.webp" data-alt="Yalla Sahel buyouts screen">
+            <img src="../assets/dashboard-preview/screenshots/IMG_5260.webp" alt="Yalla Sahel buyouts screen" width="1290" height="726" loading="lazy" decoding="async">
+            <strong data-i18n="buyouts">Buyouts</strong>
+            <span data-i18n="buyoutsCopy">Manage private bookings, buyouts and offers.</span>
+          </button>
+          <button class="screen-card" type="button" data-image="../assets/dashboard-preview/screenshots/IMG_5262.webp" data-alt="Yalla Sahel capacity management screen">
+            <img src="../assets/dashboard-preview/screenshots/IMG_5262.webp" alt="Yalla Sahel capacity management screen" width="1290" height="726" loading="lazy" decoding="async">
+            <strong data-i18n="capacity">Capacity Management</strong>
+            <span data-i18n="capacityCopy">Keep guest volume under control across every day.</span>
+          </button>
+          <button class="screen-card" type="button" data-image="../assets/dashboard-preview/screenshots/IMG_5247.webp" data-alt="Yalla Sahel customer management screen">
+            <img src="../assets/dashboard-preview/screenshots/IMG_5247.webp" alt="Yalla Sahel customer management screen" width="1290" height="726" loading="lazy" decoding="async">
+            <strong data-i18n="customers">Customer Management</strong>
+            <span data-i18n="customersCopy">Capture guest details during every sale.</span>
+          </button>
+          <button class="screen-card" type="button" data-image="../assets/dashboard-preview/screenshots/IMG_5265.webp" data-alt="Yalla Sahel insights dashboard screen">
+            <img src="../assets/dashboard-preview/screenshots/IMG_5265.webp" alt="Yalla Sahel insights dashboard screen" width="1290" height="726" loading="lazy" decoding="async">
+            <strong data-i18n="insights">Insights Dashboard</strong>
+            <span data-i18n="insightsCopy">See the tools that shape better decisions.</span>
+          </button>
+          <button class="screen-card" type="button" data-image="../assets/dashboard-preview/screenshots/IMG_5270.webp" data-alt="Yalla Sahel weather dashboard screen">
+            <img src="../assets/dashboard-preview/screenshots/IMG_5270.webp" alt="Yalla Sahel weather dashboard screen" width="1290" height="726" loading="lazy" decoding="async">
+            <strong data-i18n="weather">Weather Dashboard</strong>
+            <span data-i18n="weatherCopy">Plan operations around live beach conditions.</span>
+          </button>
+          <button class="screen-card" type="button" data-image="../assets/dashboard-preview/screenshots/IMG_5270.webp" data-alt="Yalla Sahel staff management screen">
+            <img src="../assets/dashboard-preview/screenshots/IMG_5270.webp" alt="Yalla Sahel staff management screen" width="1290" height="726" loading="lazy" decoding="async">
+            <strong data-i18n="staff">Staff Management</strong>
+            <span data-i18n="staffCopy">Coordinate the team from one workspace.</span>
+          </button>
+          <button class="screen-card" type="button" data-image="../assets/dashboard-preview/screenshots/IMG_5270.webp" data-alt="Yalla Sahel settings screen">
+            <img src="../assets/dashboard-preview/screenshots/IMG_5270.webp" alt="Yalla Sahel settings screen" width="1290" height="726" loading="lazy" decoding="async">
+            <strong data-i18n="settings">Settings</strong>
+            <span data-i18n="settingsCopy">Configure the platform around your venue.</span>
+          </button>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <div class="image-modal" id="imageModal" aria-hidden="true" role="dialog" aria-modal="true">
+    <figure>
+      <button class="modal-close" type="button" aria-label="Close preview">&times;</button>
+      <img id="modalImage" src="" alt="">
+    </figure>
+  </div>
+
+  <script>
+    const copy = {
+      en: {
+        back: 'Back to website', navigation: 'Navigation', overview: 'Overview', operations: 'Operations', analytics: 'Analytics',
+        eyebrow: 'Yalla Sahel Platform', title: 'Explore the beach operations dashboard.',
+        description: 'A visual walkthrough of the core tools your team uses to sell, manage availability, handle tickets and check guests in.',
+        status: 'Live Preview', metricOne: 'Beach Management Modules', metricTwo: 'POS â€¢ Tickets â€¢ Memberships â€¢ QR', metricThree: 'Real-Time Operations & Reporting',
+        pos: 'POS & Checkout', posCopy: 'Tickets, payments and checkout in one workspace.',
+        tickets: 'Ticket Management', ticketsCopy: 'Configure ticket categories, pricing and availability.',
+        availability: 'Availability Calendar', availabilityCopy: 'Open, close or set buyouts by date.',
+        qr: 'QR Check-In', qrCopy: 'Fast ticket and membership scanning at the gate.',
+        menu: 'Menu Management', menuCopy: 'Keep guest menus organized and ready to publish.',
+        sales: 'Sales Reports', salesCopy: 'Track daily revenue and transactions in one view.',
+        buyouts: 'Buyouts', buyoutsCopy: 'Manage private bookings, buyouts and offers.',
+        capacity: 'Capacity Management', capacityCopy: 'Keep guest volume under control across every day.',
+        customers: 'Customer Management', customersCopy: 'Capture guest details during every sale.',
+        insights: 'Insights Dashboard', insightsCopy: 'See the tools that shape better decisions.',
+        weather: 'Weather Dashboard', weatherCopy: 'Plan operations around live beach conditions.',
+        staff: 'Staff Management', staffCopy: 'Coordinate the team from one workspace.',
+        settings: 'Settings', settingsCopy: 'Configure the platform around your venue.'
+      },
+      ar: {
+        back: 'ط§ظ„ط¹ظˆط¯ط© ظ„ظ„ظ…ظˆظ‚ط¹', navigation: 'ط§ظ„طھظ†ظ‚ظ„', overview: 'ظ†ط¸ط±ط© ط¹ط§ظ…ط©', operations: 'ط§ظ„طھط´ط؛ظٹظ„', reports: 'ط§ظ„طھظ‚ط§ط±ظٹط±',
+        eyebrow: 'ظ…ظ†طµط© ظٹظ„ط§ ط³ط§ط­ظ„', title: 'ط§ط³طھط¹ط±ط¶ ظ„ظˆط­ط© طھط­ظƒظ… طھط´ط؛ظٹظ„ ط§ظ„ط´ط§ط·ط¦.',
+        description: 'ط¬ظˆظ„ط© ظ…ط±ط¦ظٹط© ظپظٹ ط§ظ„ط£ط¯ظˆط§طھ ط§ظ„ط£ط³ط§ط³ظٹط© ط§ظ„طھظٹ ظٹط³طھط®ط¯ظ…ظ‡ط§ ظپط±ظٹظ‚ظƒ ظ„ظ„ط¨ظٹط¹ ظˆط¥ط¯ط§ط±ط© ط§ظ„ط¥طھط§ط­ط© ظˆط§ظ„طھط°ط§ظƒط± ظˆط¯ط®ظˆظ„ ط§ظ„ط²ظˆط§ط±.',
+        status: 'ط¹ط±ط¶ ظ…ط¨ط§ط´ط±', metricOne: 'ظ…ط³ط§ط±ط§طھ طھط´ط؛ظٹظ„ ط£ط³ط§ط³ظٹط©', metricTwo: 'ظ…ط³ط§ط­ط© ط¹ظ…ظ„ ظ…طھطµظ„ط©', metricThree: 'ط±ط¤ظٹط© طھط´ط؛ظٹظ„ظٹط© ظ…ط³طھظ…ط±ط©',
+        pos: 'ظ†ظ‚ط§ط· ط§ظ„ط¨ظٹط¹ ظˆط§ظ„ط¯ظپط¹', posCopy: 'ط§ظ„طھط°ط§ظƒط± ظˆط§ظ„ظ…ط¯ظپظˆط¹ط§طھ ظˆط§ظ„ط¯ظپط¹ ظ…ظ† ظ…ط³ط§ط­ط© ظˆط§ط­ط¯ط©.',
+        tickets: 'ط¥ط¯ط§ط±ط© ط§ظ„طھط°ط§ظƒط±', ticketsCopy: 'ط¥ط¹ط¯ط§ط¯ ط§ظ„ظپط¦ط§طھ ظˆط§ظ„ط£ط³ط¹ط§ط± ظˆط§ظ„ط¥طھط§ط­ط©.',
+        availability: 'طھظ‚ظˆظٹظ… ط§ظ„ط¥طھط§ط­ط©', availabilityCopy: 'ظپطھط­ ط£ظˆ ط¥ط؛ظ„ط§ظ‚ ط£ظˆ طھط®طµظٹطµ ط£ظٹط§ظ… ط§ظ„ط­ط¬ط².',
+        qr: 'ط§ظ„ط¯ط®ظˆظ„ ط¹ط¨ط± QR', qrCopy: 'ظ…ط³ط­ ط³ط±ظٹط¹ ظ„ظ„طھط°ط§ظƒط± ظˆط§ظ„ط¹ط¶ظˆظٹط§طھ ط¹ظ†ط¯ ط§ظ„ط¨ظˆط§ط¨ط©.'
+      }
+    };
+
+    Object.assign(copy.ar, {
+      analytics: 'ط§ظ„طھط­ظ„ظٹظ„ط§طھ',
+      metricOne: 'ظˆط­ط¯ط© ظ„ط¥ط¯ط§ط±ط© ط§ظ„ط´ط§ط·ط¦',
+      metricTwo: 'ظ†ظ‚ط§ط· ط§ظ„ط¨ظٹط¹ â€¢ ط§ظ„طھط°ط§ظƒط± â€¢ ط§ظ„ط¹ط¶ظˆظٹط§طھ â€¢ QR',
+      metricThree: 'ط¹ظ…ظ„ظٹط§طھ ظˆطھظ‚ط§ط±ظٹط± ظ„ط­ط¸ظٹط©',
+      menu: 'ط¥ط¯ط§ط±ط© ط§ظ„ظ…ظ†ظٹظˆ', menuCopy: 'ظ†ط¸ظ‘ظ… ظ…ظ†ظٹظˆ ط§ظ„ط¶ظٹظˆظپ ظˆط¬ظ‡ظ‘ط²ظ‡ ظ„ظ„ظ†ط´ط±.',
+      sales: 'طھظ‚ط§ط±ظٹط± ط§ظ„ظ…ط¨ظٹط¹ط§طھ', salesCopy: 'طھط§ط¨ط¹ ط§ظ„ط¥ظٹط±ط§ط¯ط§طھ ظˆط§ظ„ظ…ط¹ط§ظ…ظ„ط§طھ ط§ظ„ظٹظˆظ…ظٹط© ظ…ظ† ظ…ظƒط§ظ† ظˆط§ط­ط¯.',
+      buyouts: 'ط§ظ„ط­ط¬ظˆط²ط§طھ ط§ظ„ط®ط§طµط©', buyoutsCopy: 'ط£ط¯ط± ط§ظ„ط­ط¬ظˆط²ط§طھ ط§ظ„ط®ط§طµط© ظˆط§ظ„ط¹ط±ظˆط¶ ط¨ط³ظ‡ظˆظ„ط©.',
+      capacity: 'ط¥ط¯ط§ط±ط© ط§ظ„ط·ط§ظ‚ط© ط§ظ„ط§ط³طھظٹط¹ط§ط¨ظٹط©', capacityCopy: 'طھط­ظƒظ… ظپظٹ ط£ط¹ط¯ط§ط¯ ط§ظ„ط¶ظٹظˆظپ ط·ظˆط§ظ„ ط§ظ„ظٹظˆظ….',
+      customers: 'ط¥ط¯ط§ط±ط© ط§ظ„ط¹ظ…ظ„ط§ط،', customersCopy: 'ط³ط¬ظ‘ظ„ ط¨ظٹط§ظ†ط§طھ ط§ظ„ط¶ظٹظˆظپ ظ…ط¹ ظƒظ„ ط¹ظ…ظ„ظٹط© ط¨ظٹط¹.',
+      insights: 'ظ„ظˆط­ط© ط§ظ„ظ…ط¤ط´ط±ط§طھ', insightsCopy: 'ط§ظƒطھط´ظپ ط§ظ„ط£ط¯ظˆط§طھ ط§ظ„طھظٹ طھط¯ط¹ظ… ظ‚ط±ط§ط±ط§طھ ط£ظپط¶ظ„.',
+      weather: 'ظ„ظˆط­ط© ط§ظ„ط·ظ‚ط³', weatherCopy: 'ط®ط·ط· ط§ظ„طھط´ط؛ظٹظ„ ط­ط³ط¨ ط¸ط±ظˆظپ ط§ظ„ط´ط§ط·ط¦ ط§ظ„ظ…ط¨ط§ط´ط±ط©.',
+      staff: 'ط¥ط¯ط§ط±ط© ط§ظ„ظپط±ظٹظ‚', staffCopy: 'ظ†ط³ظ‘ظ‚ ظپط±ظٹظ‚ ط§ظ„ط¹ظ…ظ„ ظ…ظ† ظ…ط³ط§ط­ط© ظˆط§ط­ط¯ط©.',
+      settings: 'ط§ظ„ط¥ط¹ط¯ط§ط¯ط§طھ', settingsCopy: 'ط§ط¶ط¨ط· ط§ظ„ظ…ظ†طµط© ط¨ظ…ط§ ظٹظ†ط§ط³ط¨ ظ…ظ†ط´ط£طھظƒ.'
+    });
+
+    Object.assign(copy.ar, {
+      back: 'العودة إلى الموقع', navigation: 'التنقل', overview: 'نظرة عامة', operations: 'التشغيل', analytics: 'التحليلات',
+      eyebrow: 'منصة يلا ساحل', title: 'استعرض لوحة تحكم تشغيل الشاطئ.',
+      description: 'جولة مرئية في الأدوات الأساسية التي يستخدمها فريقك للبيع وإدارة الإتاحة والتذاكر ودخول الزوار.',
+      status: 'عرض مباشر', metricOne: 'وحدة لإدارة الشاطئ', metricTwo: 'نقاط البيع • التذاكر • العضويات • QR', metricThree: 'عمليات وتقارير لحظية',
+      pos: 'نقاط البيع والدفع', posCopy: 'التذاكر والمدفوعات والدفع من مساحة واحدة.',
+      tickets: 'إدارة التذاكر', ticketsCopy: 'إعداد الفئات والأسعار والإتاحة.',
+      availability: 'تقويم الإتاحة', availabilityCopy: 'فتح أو إغلاق أو تخصيص أيام الحجز.',
+      qr: 'الدخول عبر QR', qrCopy: 'مسح سريع للتذاكر والعضويات عند البوابة.',
+      menu: 'إدارة المنيو', menuCopy: 'نظّم منيو الضيوف وجهّزه للنشر.',
+      sales: 'تقارير المبيعات', salesCopy: 'تابع الإيرادات والمعاملات اليومية من مكان واحد.',
+      buyouts: 'الحجوزات الخاصة', buyoutsCopy: 'أدر الحجوزات الخاصة والعروض بسهولة.',
+      capacity: 'إدارة الطاقة الاستيعابية', capacityCopy: 'تحكم في أعداد الضيوف طوال اليوم.',
+      customers: 'إدارة العملاء', customersCopy: 'سجّل بيانات الضيوف مع كل عملية بيع.',
+      insights: 'لوحة المؤشرات', insightsCopy: 'اكتشف الأدوات التي تدعم قرارات أفضل.',
+      weather: 'لوحة الطقس', weatherCopy: 'خطط التشغيل حسب ظروف الشاطئ المباشرة.',
+      staff: 'إدارة الفريق', staffCopy: 'نسّق فريق العمل من مساحة واحدة.',
+      settings: 'الإعدادات', settingsCopy: 'اضبط المنصة بما يناسب منشأتك.'
+    });
+
+    document.querySelector('[data-lang="ar"]').textContent = 'العربية';
+
+    // Product-tour screenshots selected from the supplied dashboard capture set.
+    const dashboardPreviewImages = {
+      pos: '../assets/dashboard-preview/screenshots/IMG_5248.webp',
+      tickets: '../assets/dashboard-preview/screenshots/IMG_5245.webp',
+      availability: '../assets/dashboard-preview/screenshots/IMG_5246.webp',
+      qr: '../assets/dashboard-preview/screenshots/IMG_5259.webp',
+      menu: '../assets/dashboard-preview/screenshots/IMG_5266.webp',
+      sales: '../assets/dashboard-preview/screenshots/IMG_5249.webp',
+      buyouts: '../assets/dashboard-preview/screenshots/IMG_5260.webp',
+      capacity: '../assets/dashboard-preview/screenshots/IMG_5262.webp',
+      customers: '../assets/dashboard-preview/screenshots/IMG_5247.webp',
+      insights: '../assets/dashboard-preview/screenshots/IMG_5265.webp',
+      weather: '../assets/dashboard-preview/screenshots/IMG_5270.webp',
+      staff: '../assets/dashboard-preview/screenshots/IMG_5270.webp',
+      settings: '../assets/dashboard-preview/screenshots/IMG_5270.webp'
+    };
+
+    document.querySelectorAll('.screen-card').forEach(card => {
+      const imageKey = card.querySelector('[data-i18n]').dataset.i18n;
+      const imagePath = dashboardPreviewImages[imageKey];
+      card.dataset.image = imagePath;
+      const image = card.querySelector('img');
+      image.src = imagePath;
+      image.srcset = `${imagePath.replace('.webp', '-640.webp')} 640w, ${imagePath} 1290w`;
+      image.sizes = '(min-width: 700px) 33vw, 92vw';
+    });
+
+    const modal = document.querySelector('#imageModal');
+    const modalImage = document.querySelector('#modalImage');
+    const closeModal = document.querySelector('.modal-close');
+
+    function setLanguage(language) {
+      document.documentElement.lang = language;
+      document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
+      document.body.dir = language === 'ar' ? 'rtl' : 'ltr';
+      document.querySelectorAll('[data-i18n]').forEach(element => {
+        element.textContent = copy[language][element.dataset.i18n];
+      });
+      document.querySelectorAll('[data-lang]').forEach(button => {
+        const active = button.dataset.lang === language;
+        button.classList.toggle('is-active', active);
+        button.setAttribute('aria-pressed', String(active));
+      });
+    }
+
+    function closePreview() {
+      modal.classList.remove('is-open');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('modal-open');
+    }
+
+    document.querySelectorAll('[data-lang]').forEach(button => button.addEventListener('click', () => setLanguage(button.dataset.lang)));
+    document.querySelectorAll('.screen-card').forEach(card => card.addEventListener('click', () => {
+      modalImage.src = card.dataset.image;
+      modalImage.alt = card.dataset.alt;
+      modal.classList.add('is-open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('modal-open');
+      closeModal.focus();
+    }));
+    closeModal.addEventListener('click', closePreview);
+    modal.addEventListener('click', event => { if (event.target === modal) closePreview(); });
+    document.addEventListener('keydown', event => { if (event.key === 'Escape') closePreview(); });
+  </script>
+</body>
+</html>
+
